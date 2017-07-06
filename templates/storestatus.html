@@ -1,0 +1,249 @@
+{% load staticfiles %}
+<html>
+		<head>
+<title>SSUK</title>
+<link rel="shortcut icon" href="{% static 'media/cart.png' %}" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<script type="text/javascript" src="{% static 'js/Product_form_valid.js' %}"></script>
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+   
+		</head>
+
+	<body onload="valuehide()" >
+
+
+
+
+ <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper">
+        <a href="/" class="brand-logo">SSUK</a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="/home">Add Product</a></li>
+          <li><a href="/list">Products</a></li>
+           <li><a href="/price">Prices</a></li>
+
+          <li><a href="/stock">Stock</a></li>
+
+           <li><a href="/logout">Logout</a></li>
+           <li><span class="badge blue">{{status}}</span></li>
+        </ul>
+
+      </div>
+    </nav>
+  </div>
+
+
+{{form.render}}
+
+<div class="container">
+
+
+       {% for message in messages %}
+                  {% if 'success' in message.tags %}
+
+                      <div id="err" style="background-color:#60ce68;color: white;" class="well" >{{ message }}</div>
+                  {% endif %}
+              {% endfor %}
+
+              {% for message in messages %}
+                  {% if 'error' in message.tags %}
+                     <div id="err" style="background-color:#B91104;color: white;" class="well" >{{ message }}</div>
+                  {% endif %}
+              {% endfor %}
+            
+
+
+    <div class="col s12 m4 l8">
+                   <div class="card-panel">
+                  <h4 style="color:#EE6E73"><i class="material-icons right" >business</i> Store is {{status}} currently</h4>
+                       
+              
+                 <!-- Switch -->
+                              <div class="switch" id="swbutton">
+                                <label>
+                                  Close
+                                  {% if status == 'Open' %}
+                                  <input type="checkbox" id="switcher"  value="1" onchange="valueChanged()" checked>
+                                  {% else %}
+
+                                  <input type="checkbox" id="switcher"  value="0" onchange="valueChanged()" unchecked>
+
+                                  {% endif %}
+                                  <span class="lever"></span>
+                                  Open
+                                </label>
+                              </div>
+
+
+                   </div>
+            
+
+    <div class="card-panel" id="Opened">
+                  <h4 style="color:#EE6E73">Open Store ?</h4>
+                                        <p>All your products will be back to serve users..</p>
+
+                            <form action="{% url 'so' %}"  method="POST">{% csrf_token %}  
+                              <button class="btn waves-effect waves-light" type="submit" name="action">Open Store</button>
+              
+
+                            </form>
+    
+
+
+                   </div>
+            
+
+
+
+
+
+
+
+
+
+         <div id="Closedd">
+
+                    <div class="card blue-grey darken-1" id="closed_notice">
+            <div class="card-content white-text">
+                  <h4 style="color:#EE6E73">Attention !! Shutting down the store will</h4>
+                  <ul>
+                  <li> Prevent Users to see your products and make orders.</li>
+
+                  <li> You will be temporarily closed but you can reopen it again.</li>
+                  </ul>
+
+
+                               
+
+
+
+                   </div></div>
+
+
+            <div class="card sticky-action" id="closed">
+              <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">Closing details for users</span>
+
+
+  <form action="{% url 'storestatus' %}"  enctype="multipart/form-data"  method="POST">{% csrf_token %}  
+    
+                <p> <label>Closed till<span>*</span></label>
+                          <input type="date" class="datepicker" name="ftime" >
+                                                                                         
+              </p>
+
+                 <label>Message for Users <span>*</span></label>
+                  <input type="text" class="name" name="fmsg"   placeholder="e.g:-Out of office">
+
+
+              </div>
+
+              <div class="card-action">
+                <a href="#">Cancel</a>
+               <button class="btn waves-effect waves-light" type="submit" name="action">Proceed to close  </button>
+              </div>
+</form>
+            </div>
+          </div>
+         
+
+
+
+</div>
+
+     </div>
+
+       
+</div>
+
+
+
+
+
+
+ <footer style=" position:fixed;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    margin-bottom:0px;" class="page-footer">
+         
+          <div class="footer-copyright">
+            <div class="container">
+            © 2017 Copyright Shrishti Solutions U.K.
+            <a class="grey-text text-lighten-4 right" href="#!">Contact Us</a>
+            </div>
+          </div>
+</footer>
+
+
+
+
+
+
+<script type="text/javascript">
+function valueChanged()
+{  
+    if($('#switcher').is(":checked"))   
+        {$("#Closedd").hide();$("#Opened").show();console.log("check");}
+    else
+        {$("#Closedd").show();$("#Opened").hide();console.log("uncheck");}
+}
+function valuehide()
+{  
+        $("#Closedd").hide();$("#Opened").hide();console.log("check");
+}
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   <script type="text/javascript">
+  
+$(document).ready(function(){
+        $("#err").fadeOut(5000);
+   
+}); 
+</script> <script type="text/javascript">
+                 $('.datepicker').pickadate({
+      selectMonths: true, // Creates a dropdown to control month
+      selectYears: 35,
+       format:'yyyy-mm-dd' // Creates a dropdown of 15 years to control year
+    });
+          
+              </script>
+
+
+
+
+
+	</body>
+</html>

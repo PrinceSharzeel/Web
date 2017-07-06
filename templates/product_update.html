@@ -1,0 +1,312 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="{% static 'media/cart.png' %}" />
+<title>SSUk:B2B</title>
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/dropzone.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap-select.css' %}">
+<link href="{% static 'css/rstyle.css' %}" rel="stylesheet" type="text/css" media="all" />
+<!-- for-mobile-apps -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Resale Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- //for-mobile-apps -->
+<!--fonts-->
+<link href='//fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+<!--//fonts-->	
+<!-- js -->
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<!-- js -->
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script type="text/javascript">
+	$(document).ready(function () {
+    Dropzone.autoDiscover = false;
+    $("#dZUpload").dropzone({
+        url: "hn_SimpeFileUploader.ashx",
+        addRemoveLinks: true,
+        success: function (file, response) {
+            var imgName = response;
+            file.previewElement.classList.add("dz-success");
+            console.log("Successfully uploaded :" + imgName);
+        },
+        error: function (file, response) {
+            file.previewElement.classList.add("dz-error");
+        }
+    });
+});
+</script>
+
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-select.js' %}"></script>
+<script>
+  $(document).ready(function () {
+    var mySelect = $('#first-disabled2');
+
+    $('#special').on('click', function () {
+      mySelect.find('option:selected').prop('disabled', true);
+      mySelect.selectpicker('refresh');
+    });
+
+    $('#special2').on('click', function () {
+      mySelect.find('option:disabled').prop('disabled', false);
+      mySelect.selectpicker('refresh');
+    });
+
+    $('#basic2').selectpicker({
+      liveSearch: true,
+      maxOptions: 1
+    });
+  });
+</script>
+<script type="text/javascript" src="{% static 'js/jquery.leanModal.min.js' %}"></script>
+<link href="{% static 'css/jquery.uls.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/jquery.uls.grid.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/jquery.uls.lcd.css' %}" rel="stylesheet"/>
+<!-- Source -->
+<script src="{% static 'js/jquery.uls.data.js' %}"></script>
+<script src="{% static 'js/jquery.uls.data.utils.js' %}"></script>
+<script src="{% static 'js/jquery.uls.lcd.js' %}"></script>
+<script src="{% static 'js/jquery.uls.languagefilter.js' %}"></script>
+<script src="{% static 'js/jquery.uls.regionfilter.js' %}"></script>
+<script src="{% static 'js/jquery.uls.core.js' %}"></script>
+<script>
+			$( document ).ready( function() {
+				$( '.uls-trigger' ).uls( {
+					onSelect : function( language ) {
+						var languageName = $.uls.data.getAutonym( language );
+						$( '.uls-trigger' ).text( languageName );
+					},
+					quickList: ['en', 'hi', 'he', 'ml', 'ta', 'fr'] //FIXME
+				} );
+			} );
+		</script>
+		<link rel="stylesheet" type="text/css" href="css/easy-responsive-tabs.css " />
+    <script src="js/easyResponsiveTabs.js"></script>
+</head>
+<body>
+<div class="header" style="background-color: #222222;">
+		<div class="container">
+			<div class="logo">
+				<a href="index.html"><span>SS</span>UK</a>
+			</div>
+			<div class="header-right">
+			
+			<a class="account" href="{% url 'index' %}">My Account</a>
+			<a class="account" href="{% url 'list' %}">Products</a>
+			
+		</div>
+		</div>
+	</div>
+	
+   {% for message in messages %}
+			    {% if 'success' in message.tags %}
+
+			        <div id="err" style="background-color:#60ce68;color: white;" class="well" >{{ message }}</div>
+			    {% endif %}
+			{% endfor %}
+
+			{% for message in messages %}
+			    {% if 'error' in message.tags %}
+			       <div id="err" style="background-color:#B91104;color: white;" class="well" >{{ message }}</div>
+			    {% endif %}
+			{% endfor %}
+	<!-- Submit Ad -->
+	<div class="submit-ad main-grid-border">
+		<div class="container">
+			<h2 class="head">Update Product Details:  <u style="color:#01A185;">{{form.ptitle}}</u></h2>
+			<div class="post-ad-form" style="box-shadow: 10px 10px 5px #888888;">
+				<form action="{% url 'product' form.ptitle %}" enctype="multipart/form-data" method="POST">{% csrf_token %}
+      <div class="row">
+					
+					<div class="row">
+										<div class="col-sm-6 form-group">
+											<label>Item Name <span>*</span></label>
+									<input type="text" placeholder="Enter Item Name Here.."  value="{{form.ptitle}}" name="ptitle" class="form-control" required>
+										</div>	
+										<div class="col-sm-6 form-group">
+											<label>Item Category<span>*</span></label>
+												<select class="" name="pcat">
+												  <option>Select Category</option>
+												  <option>Spices</option>
+												  <option>Vehicles</option>
+												  <option>Furniture</option>
+												  <option>Books, Sports and hobbies</option>
+												  <option>Fashion</option>
+												  <option>Services</option>
+												</select>
+										</div>	
+					</div>
+					<div class="row">
+										<div class="col-sm-6 form-group">
+											<label>Brand <span>*</span></label>
+									<input type="text" placeholder="Enter Brand Here.." value="{{form.pbrand}}" name="pbrand" class="form-control" required>
+										</div>		
+										<div class="col-sm-6 form-group">
+											<label>Package <span>*</span></label>
+									<input type="text" placeholder="Enter Package Here.." value="{{form.package}}" name="package" class="form-control" required>
+										</div>	
+					</div>
+					<div class="row">
+										<div class="col-sm-6 form-group">
+											<label>Unit</label>
+									<input type="text" placeholder="Enter Number of Units.." value="{{form.punit}}" name="punit" class="form-control" required>
+										</div>		
+										<div class="col-sm-6 form-group">
+											<label>Weight</label>
+									<input type="text" placeholder="Enter Weight..." value="{{form.pweight}}" name="pweight" class="form-control" required>
+										</div>	
+					</div>
+					<div class="row">
+										<div class="col-sm-6 form-group">
+											<label>Litres</label>
+									<input type="text" placeholder="Enter Litres.." value="{{form.plitres}}" name="plitres" class="form-control" required>
+										</div>		
+										<div class="col-sm-6 form-group">
+											<label>Price per unit</label>
+									<input type="text" placeholder="Enter Price...." value="{{form.price}}" name="price" class="form-control" required>
+										</div>	
+					</div>
+					<div class="row">
+										<div class="col-sm-6 form-group">
+											<label>Minimum Order Quantity</label>
+									<input type="text" placeholder="Enter Least amount of Quantity.." value="{{form.pmin}}"  name="pmin" class="form-control" required>
+										</div>		
+										<div class="col-sm-6 form-group">
+											<label>Maximum Order Quantity</label>
+									<input type="text" placeholder="Enter Max. amount of Quantity.." value="{{form.pmax}}" name="pmax" class="form-control" required>
+										</div>	
+									</div>
+					<div class="clearfix"></div>
+
+				<label>Product Image:</label>	<span class="btn btn-default btn-file">
+									<label>Logo</label>
+									<input type="file" name="ppro" class="form-control"  required  hidden>
+								</span>
+									
+
+             <!--
+                       <div id="dZUpload" name="photos" class="dropzone">
+      <div class="dz-default dz-message"></div>
+</div>
+						
+						<script src="{% static 'js/dropzone.js' %}"></script>
+				</div> -->
+
+					<div class="personal-details">
+				
+
+					
+						<label>Discount(%) <span>*</span></label>
+						<input type="text" class="name" name="pdisc" id="pdisc" value="{{form.pdisc}}" onblur="disc()"   placeholder="">
+						<div class="clearfix"></div>
+						<label>Discount(Reduced Price)<span>*</span></label>
+						<input type="text" class="phone"  value="{{form.preddisc}}" name="preddisc" placeholder=""><script type="text/javascript">
+							function disc(){var a=document.getElementById('pdisc').value;if(a>100)alert("Invalid Percentage!!");}
+						</script>
+						<div class="clearfix"></div>
+						<label>Discount Expiry Date<span>*</span></label>
+						<input type="text" class="email" value="{{form.pexp}}" name="pexp" placeholder="">
+						<div class="clearfix"></div>
+						
+					<input type="submit" style="box-shadow: 10px 10px 5px #888888;" value="Update">	
+
+					<div class="clearfix"></div>
+					</form>
+					</div>
+			</div>
+		</div>	
+		</div>
+	</div>
+	<!-- // Submit Ad -->
+	<!--footer section start-->		
+		<footer>
+			<div class="footer-top">
+				<div class="container">
+					<div class="foo-grids">
+						<div class="col-md-3 footer-grid">
+							<h4 class="footer-head">Who We Are</h4>
+							<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+							<p>The point of using Lorem Ipsum is that it has a more-or-less normal letters, as opposed to using 'Content here.</p>
+						</div>
+						<div class="col-md-3 footer-grid">
+							<h4 class="footer-head">Help</h4>
+							<ul>
+								<li><a href="howitworks.html">How it Works</a></li>						
+								<li><a href="sitemap.html">Sitemap</a></li>
+								<li><a href="faq.html">Faq</a></li>
+								<li><a href="feedback.html">Feedback</a></li>
+								<li><a href="contact.html">Contact</a></li>
+								<li><a href="typography.html">Shortcodes</a></li>
+							</ul>
+						</div>
+						<div class="col-md-3 footer-grid">
+							<h4 class="footer-head">Information</h4>
+							<ul>
+								<li><a href="regions.html">Locations Map</a></li>	
+								<li><a href="terms.html">Terms of Use</a></li>
+								<li><a href="popular-search.html">Popular searches</a></li>	
+								<li><a href="privacy.html">Privacy Policy</a></li>	
+							</ul>
+						</div>
+						<div class="col-md-3 footer-grid">
+							<h4 class="footer-head">Contact Us</h4>
+							<span class="hq">Our headquarters</span>
+							<address>
+								<ul class="location">
+									<li><span class="glyphicon glyphicon-map-marker"></span></li>
+									<li>CENTER FOR FINANCIAL ASSISTANCE TO DEPOSED NIGERIAN ROYALTY</li>
+									<div class="clearfix"></div>
+								</ul>	
+								<ul class="location">
+									<li><span class="glyphicon glyphicon-earphone"></span></li>
+									<li>+0 561 111 235</li>
+									<div class="clearfix"></div>
+								</ul>	
+								<ul class="location">
+									<li><span class="glyphicon glyphicon-envelope"></span></li>
+									<li><a href="mailto:info@example.com">mail@example.com</a></li>
+									<div class="clearfix"></div>
+								</ul>						
+							</address>
+						</div>
+						<div class="clearfix"></div>
+					</div>						
+				</div>	
+			</div>	
+			<div class="footer-bottom text-center">
+			<div class="container">
+				<div class="footer-logo">
+					<a href="index.html"><span>SS</span>UK</a>
+				</div>
+				<div class="footer-social-icons">
+					<ul>
+						<li><a class="facebook" href="#"><span>Facebook</span></a></li>
+						<li><a class="twitter" href="#"><span>Twitter</span></a></li>
+						<li><a class="flickr" href="#"><span>Flickr</span></a></li>
+						<li><a class="googleplus" href="#"><span>Google+</span></a></li>
+						<li><a class="dribbble" href="#"><span>Dribbble</span></a></li>
+					</ul>
+				</div>
+				<div class="copyrights">
+					<p> © SSUK. All Rights Reserved|</a></p>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+		</footer>
+        <!--footer section end-->
+
+        <script type="text/javascript">
+	
+$(document).ready(function(){
+        $("#err").fadeOut(5000);
+   
+}); 
+</script>
+</body>
+</html>

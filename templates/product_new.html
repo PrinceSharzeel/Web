@@ -1,0 +1,295 @@
+{% load staticfiles %}
+<html>
+		<head>
+<title>SSUK</title>
+<link rel="shortcut icon" href="{% static 'media/cart.png' %}" />
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="css/nav.css">
+
+<script type="text/javascript" src="{% static 'js/Product_form_valid.js' %}"></script>
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+   
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		</head>
+	<body style="background-color: #F1F1F1;" >
+
+
+
+<div class="navbar-fixed">
+
+<nav class="nav-extended">
+    <div class="nav-wrapper">
+    <img src="{% static 'media/cart.png' %}" alt="" class="circle" width="40px" height="40px">
+      <a href="/" class="brand-logo">SSUK</a>
+      <ul class="right hide-on-med-and-down">
+          <li><a href="/home">Add Product</a></li>
+          <li><a href="/list">Products</a></li>
+          <li><a href="/stock">Stock</a></li>
+
+           <li><a href="/logout">Logout</a></li>
+      </ul>
+    </div>
+    <div class="nav-content">
+
+      <span class="nav-title">Updation</span>
+    </div>
+  </nav>
+
+</div>
+
+
+
+
+
+
+    <div class="row" style="margin-top: 100px;">
+
+
+
+
+    <div class="col s12"><div class="card-panel">
+     <h4 style="color:#EE6E73; text-align:center;"><i class="material-icons right">mode_edit</i> Product Update | <b>{{form.ptitle}}<b> </h4>
+   
+    </div>
+
+   
+
+    </div>
+
+
+
+    <div class="col s12 m4 l3">  <div class="card-panel">
+      <h6>Update Product Image</h6>
+          <div class="file-field input-field" >
+          <div class="row">
+           <img class="materialboxed" style="width:250px;
+   height:250px;
+   max-width:100%;
+max-height:100%;" src="{{form.ppro}}">
+           </div>
+            <div class="row"><form action="{% url 'productimage' form.ptitle %}"  enctype="multipart/form-data" method="POST">{% csrf_token %}
+     
+                  <div class="btn">
+                    <span>Product Image<i class="material-icons left">image</i></span>
+                    <input name="ppro" type="file" >
+                  </div> 
+              </div>
+              <div class="row">  
+                  <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" >
+                  </div>
+
+              </div>
+              <div class="row">
+                 <button class="btn waves-effect waves-light btn-medium right" type="submit" name="action"><i class="large material-icons right">done</i>
+  </button>
+              </div>
+     
+          </div>
+          </form>
+
+
+
+    
+    </div></div>
+
+<script>
+        {% if messages %}
+            {% for message in messages %}
+                Materialize.toast('{{ message }}', 4000,'rounded');
+            {% endfor %}
+        {% endif %}
+</script>
+
+    <script>
+$(document).ready(function(){
+        $("#err").fadeOut(5000);
+   
+}); 
+
+    </script>
+
+
+    <script type="text/javascript">$(document).ready(function() {
+    $('select').material_select();
+});
+</script>
+
+    <div class="col s12 m4 l7">
+     <div class="card-panel">
+     <form action="{% url 'product' form.ptitle %}" onsubmit="return ValidateForm()" enctype="multipart/form-data" method="POST">{% csrf_token %}
+      <div class="row">
+          
+          <div class="row">
+                    <div class="input-field col s6">
+                      <label>Item Name <span>*</span></label>
+                  <input type="text"  value="{{form.ptitle}}" name="ptitle"  id="firstname"  onkeyup="FormValidation()" class="form-control" required>
+                    </div>  
+                    
+          </div>
+                    <div class="row">
+
+
+                          <div class="input-field col s12">
+                            <select name="pcat" value="{{form.pcat}}">
+                              <option>{{form.pcat}}</option>
+                              {% for r in options %}
+                              <option >{{r.fname}}</option>
+                              {% endfor %}
+                             </select>
+                            <label>Category</label>
+                          </div>
+
+                  </div>
+          <div class="row">
+                    <div class="input-field col s6">
+                      <label>Brand <span>*</span></label>
+                  <input type="text"  value="{{form.pbrand}}"  name="pbrand" id="pbrand" onkeyup="BrandValidation()" class="form-control" required>
+                    </div>    
+                    <div class="input-field col s6">
+                      <label>Package <span>*</span></label>
+                  <input type="text"  value="{{form.package}}" name="package" id="package" onkeyup="PackageValidation()" class="form-control" required>
+                    </div>  
+          </div>
+          <div class="row">
+                    <div class="input-field col s6">
+                      <label>Unit</label>
+                  <input type="text" value="{{form.punit}}" name="punit" id="punit" onkeyup="UnitValidation()" class="form-control" required>
+                    </div>    
+                    <div class="input-field col s6">
+                      <label>Weight</label>
+                  <input type="text" value="{{form.pweight}}" name="pweight" id="pweight" onkeyup="WeightValidation()" class="form-control" required>
+                    </div>  
+          </div>
+          <div class="row">
+                    <div class="input-field col s6">
+                      <label>Litres</label>
+                  <input type="text"  value="{{form.plitres}}" name="plitres" id="plitres" onkeyup="LitreValidation()" class="form-control" required>
+                    </div>    
+                    <div class="input-field col s6">
+                      <label>Price per unit</label>
+                  <input type="text"  value="{{form.price}}" name="price" id="price" onkeyup="PriceValidation()" class="form-control" required>
+                    </div>  
+          </div>
+          <div class="row">
+                    <div class="input-field col s6">
+                      <label>Minimum Order Quantity</label>
+                  <input type="text" value="{{form.pmin}}"  name="pmin" id="pmin" onkeyup="MinValidation()" class="form-control" required>
+                    </div>    
+                    <div class="input-field col s6">
+                      <label>Maximum Order Quantity</label>
+                  <input type="text" value="{{form.pmax}}" name="pmax" id="pmax" onkeyup="MaxValidation()" class="form-control" required>
+                    </div>  
+                  </div>
+          <div class="clearfix"></div>
+          
+         
+
+          <div class="personal-details">
+        
+
+          
+            <label>Discount(%) <span>*</span></label>
+            <input type="text" class="name" name="pdisc" id="pdisc" onkeyup="discValidation()"  value="{{form.pdisc}}" onblur="disc()"   placeholder="">
+            <div class="clearfix"></div>
+            <label>Discount(Reduced Price)<span>*</span></label>
+            <input type="text" class="phone"  value="{{form.preddisc}}" name="preddisc" id="preddisc" onkeyup="preddiscValidation()" placeholder=""><script type="text/javascript">
+              function disc(){var a=document.getElementById('pdisc').value;if(a>100)alert("Invalid Percentage!!");}
+            </script>
+          
+            <label>Discount Expiry Date<span>*</span></label>
+            <input type="date" class="datepicker" value="{{form.pexp}}" id="pexp" name="pexp" >
+            <div class="clearfix"></div>
+            <script type="text/javascript">
+               $('.datepicker').pickadate({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 35,
+    format:'yyyy-mm-dd'
+  });
+        
+            </script>
+           <button class="btn waves-effect waves-light right" type="submit" name="action">Update<i class="material-icons right">cloud</i>
+  </button>
+
+          <div class="clearfix"></div>
+          </form>
+
+
+     </div>
+
+
+
+    </div>
+
+
+          
+                                
+                        
+
+
+
+
+    </div>
+
+</div>
+
+  </div>
+
+
+
+
+
+
+
+
+
+ <footer class="page-footer">
+         
+          <div class="footer-copyright">
+            <div class="container">
+            © 2017 Copyright Shrishti Solutions U.K.
+            <a class="grey-text text-lighten-4 right" href="#!">Contact Us</a>
+            </div>
+          </div>
+        </footer>
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ["Time", "Sales"],
+          {% for r in result %}
+          [{{r.time}}, '{{r.price}}'],
+          {% endfor %}
+        ]);
+
+        var options = {
+          title: 'Company Performance',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+	</body>
+</html>

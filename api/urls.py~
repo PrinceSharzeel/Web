@@ -1,0 +1,31 @@
+from django.conf.urls import url,include
+from . import views
+from django.contrib.auth import views as auth_views
+
+from rest_framework.urlpatterns import format_suffix_patterns
+
+urlpatterns=[
+   
+
+    url(r'products/(?P<uname>[-\w]+)/$',views.apilist),
+     url(r'^register/$',views.apireg),
+
+     url(r'^reg/$',views.apireg2),
+
+     url(r'^pas/$',views.apipass),
+     url(r'^login/(?P<uname>[-\w]+)/$',views.apilogin),
+	 url(r'^orders/(?P<uname>[-\w]+)/$',views.orders),
+ url(r'^prod_detail/(?P<uname>[-\w]+)/$',views.Product_detail),
+url(r'^order_add/$',views.add_order),
+url(r'^category/$',views.category),
+url(r'^postcode/(?P<uname>[-\w]+)/$',views.postcode),
+
+url(r'^date_check/(?P<uname>[-\w]+)/$',views.dateavail),
+
+url(r'^paycard/$',views.paycard_details),
+
+
+]
+
+
+urlpatterns = format_suffix_patterns(urlpatterns)

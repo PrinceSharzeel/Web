@@ -1,0 +1,275 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="{% static 'media/cart.png' %}" />
+<title>SSUk:B2B</title>
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/dropzone.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap-select.css' %}">
+<link href="{% static 'css/rstyle.css' %}" rel="stylesheet" type="text/css" media="all" />
+<!-- for-mobile-apps -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Resale Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- //for-mobile-apps -->
+<!--fonts-->
+<link href='//fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+<!--//fonts-->	
+<!-- js -->
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<!-- js -->
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script type="text/javascript">
+	$(document).ready(function () {
+    Dropzone.autoDiscover = false;
+    $("#dZUpload").dropzone({
+        url: "hn_SimpeFileUploader.ashx",
+        addRemoveLinks: true,
+        success: function (file, response) {
+            var imgName = response;
+            file.previewElement.classList.add("dz-success");
+            console.log("Successfully uploaded :" + imgName);
+        },
+        error: function (file, response) {
+            file.previewElement.classList.add("dz-error");
+        }
+    });
+});
+</script>
+<script type="text/javascript">
+	
+$(document).ready(function(){
+        $("#err").fadeOut(5000);
+   
+}); 
+</script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-select.js' %}"></script>
+<script>
+  $(document).ready(function () {
+    var mySelect = $('#first-disabled2');
+
+    $('#special').on('click', function () {
+      mySelect.find('option:selected').prop('disabled', true);
+      mySelect.selectpicker('refresh');
+    });
+
+    $('#special2').on('click', function () {
+      mySelect.find('option:disabled').prop('disabled', false);
+      mySelect.selectpicker('refresh');
+    });
+
+    $('#basic2').selectpicker({
+      liveSearch: true,
+      maxOptions: 1
+    });
+  });
+</script>
+<script type="text/javascript" src="{% static 'js/jquery.leanModal.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'js/Product_form_valid.js' %}"></script>
+<link href="{% static 'css/jquery.uls.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/jquery.uls.grid.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/jquery.uls.lcd.css' %}" rel="stylesheet"/>
+<!-- Source -->
+<script src="{% static 'js/jquery.uls.data.js' %}"></script>
+<script src="{% static 'js/jquery.uls.data.utils.js' %}"></script>
+<script src="{% static 'js/jquery.uls.lcd.js' %}"></script>
+<script src="{% static 'js/jquery.uls.languagefilter.js' %}"></script>
+<script src="{% static 'js/jquery.uls.regionfilter.js' %}"></script>
+<script src="{% static 'js/jquery.uls.core.js' %}"></script>
+<script>
+			$( document ).ready( function() {
+				$( '.uls-trigger' ).uls( {
+					onSelect : function( language ) {
+						var languageName = $.uls.data.getAutonym( language );
+						$( '.uls-trigger' ).text( languageName );
+					},
+					quickList: ['en', 'hi', 'he', 'ml', 'ta', 'fr'] //FIXME
+				} );
+			} );
+		</script>
+		<link rel="stylesheet" type="text/css" href="css/easy-responsive-tabs.css " />
+    <script src="js/easyResponsiveTabs.js"></script>
+</head>
+<body>
+<div class="header" style="background-color: #222222;">
+		<div class="container">
+			<div class="logo">
+				<a href="index.html"><span>SS</span>UK</a>
+			</div>
+			<div class="header-right">
+			<a class="account" href="{% url 'index' %}">Store</a>
+	<!-- Large modal -->
+		
+		</div>
+		</div>
+	</div>
+	<div class="banner text-center">
+	  <div class="container">    
+			
+
+			<a class="account" href="{% url 'list' %}">My Products</a>
+	  </div>
+	</div>
+   {% for message in messages %}
+			    {% if 'success' in message.tags %}
+
+			        <div id="err" style="background-color:#60ce68;color: white;" class="well" >{{ message }}</div>
+			    {% endif %}
+			{% endfor %}
+
+			{% for message in messages %}
+			    {% if 'error' in message.tags %}
+			       <div id="err" style="background-color:#B91104;color: white;" class="well" >{{ message }}</div>
+			    {% endif %}
+			{% endfor %}
+	<!-- Submit Ad -->
+	<div class="submit-ad main-grid-border">
+		<div class="container">
+			<h2 class="head">Post new Product</h2>
+			<div class="post-ad-form" style="box-shadow: 10px 10px 5px #888888;">
+				<form action="{% url 'home' %}" onsubmit="return ValidateForm()" enctype="multipart/form-data" method="POST">{% csrf_token %}
+      <div class="row">
+					
+					<div class="row">
+										<div class="col-sm-6 form-group">
+											<label>Item Name <span>*</span></label>
+									<input type="text" placeholder="Enter Item Name Here.." id="firstname" onkeyup="FormValidation()" name="ptitle" class="form-control" required>
+										</div>	
+										<div class="col-sm-6 form-group">
+											 <select name="pcat" value="{{form.pcat}}">
+											         <option>Type of Product</option>
+					                              <option>{{pcat}}</option>
+					                              {% for r in options %}
+					                              <option >{{r.fname}}</option>
+					                              {% endfor %}
+					                             </select>
+					                            <label>Category</label>
+										</div>	
+					</div>
+					<div class="row">
+										<div class="col-sm-6 form-group">
+											<label>Brand <span>*</span></label>
+									<input type="text" placeholder="Enter Brand Here.." id="pbrand" onkeyup="BrandValidation()"  name="pbrand" class="form-control" required>
+										</div>		
+										<div class="col-sm-6 form-group">
+											<label>Package <span>*</span></label>
+									<input type="text" placeholder="Enter Package Here.." id="package" onkeyup="PackageValidation()"  name="package" class="form-control" required>
+										</div>	
+					</div>
+					<div class="row">
+										<div class="col-sm-6 form-group">
+											<label>Unit</label>
+									<input type="text" placeholder="Enter Number of Units.."  id="punit" onkeyup="UnitValidation()" name="punit" class="form-control" required>
+										</div>	
+											<div class="col-sm-6 form-group">
+											<label>Price per unit</label>
+									<input type="text" placeholder="Enter Price...." id="price" onkeyup="PriceValidation()"  name="price" class="form-control" required>
+										</div>		
+								
+					</div>
+					<div class="row">
+										<div class="col-sm-6 form-group">
+											<label>Litres</label>
+									<input type="text" placeholder="Enter Litres.." id="plitres" onkeyup="LitreValidation()"  name="plitres" class="form-control" required>
+										</div>		
+												<div class="col-sm-6 form-group">
+											<label>Weight</label>
+									<input type="text" placeholder="Enter Weight..."  id="pweight" onkeyup="WeightValidation()" name="pweight" class="form-control" required>
+										</div>	
+									
+					</div>
+					<div class="row">
+										<div class="col-sm-6 form-group">
+											<label>Minimum Order Quantity</label>
+									<input type="text" placeholder="Enter Least amount of Quantity.." id="pmin" onkeyup="MinValidation()"  name="pmin" class="form-control" required>
+										</div>		
+										<div class="col-sm-6 form-group">
+											<label>Maximum Order Quantity</label>
+									<input type="text" placeholder="Enter Max. amount of Quantity.." id="pmax" onkeyup="MaxValidation()"  name="pmax" class="form-control" required>
+										</div>	
+									</div>
+					<div class="clearfix"></div>
+
+				<label>Product Image :</label>	<span class="btn btn-default btn-file">
+									<label>Item Image</label>
+									<input type="file" name="ppro" class="form-control"  required  hidden>
+								</span>
+									
+
+             <!--
+                       <div id="dZUpload" name="photos" class="dropzone">
+      <div class="dz-default dz-message"></div>
+</div>
+						
+						<script src="{% static 'js/dropzone.js' %}"></script>
+				</div> -->
+
+					<div class="personal-details">
+				
+
+					
+						<label>Discount(%) <span>*</span></label>
+						<input type="text" class="name" name="pdisc" id="pdisc" onkeyup="discValidation()" placeholder="">
+						<div class="clearfix"></div>
+						<label>Discount(Reduced Price)<span>*</span></label>
+						<input type="text" class="phone" name="preddisc"  id="preddisc" onkeyup="preddiscValidation()" placeholder="">
+						<div class="clearfix"></div>
+						<label>Discount Expiry Date<span>*</span></label>
+						<input type="text" class="email" name="pexp" id="pexp" onkeyup="pexpValidation()" placeholder="">
+						<div class="clearfix"></div>
+						
+					<input type="submit" style="box-shadow: 10px 10px 5px #888888;" value="Save">					
+					<div class="clearfix"></div>
+					</form>
+					</div>
+			</div>
+		</div>	
+		</div>
+	</div>
+	<!-- // Submit Ad -->
+	<!--footer section start-->		
+		<footer>
+			<div class="footer-top">
+				<div class="container">
+					
+			</div>	
+			<div class="footer-bottom text-center">
+			<div class="container">
+				<div class="footer-logo">
+					<a href="index.html"><span>SS</span>UK</a>
+				</div>
+				<div class="footer-social-icons">
+					<ul>
+						<li><a class="facebook" href="#"><span>Facebook</span></a></li>
+						<li><a class="twitter" href="#"><span>Twitter</span></a></li>
+						<li><a class="flickr" href="#"><span>Flickr</span></a></li>
+						<li><a class="googleplus" href="#"><span>Google+</span></a></li>
+						<li><a class="dribbble" href="#"><span>Dribbble</span></a></li>
+					</ul>
+				</div>
+				<div class="copyrights">
+					<p> © SSUK. All Rights Reserved|</a></p>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+		</footer>
+
+
+
+
+
+
+
+
+
+		
+        <!--footer section end-->
+</body>
+</html>

@@ -1,0 +1,488 @@
+{% load staticfiles %}
+<html>
+		<head>
+<title>SSUK</title>
+<link rel="shortcut icon" href="{% static 'media/cart.png' %}" />
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="css/nav.css">
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="{% static 'css/dropzone.css' %}" rel="stylesheet">
+<link href="{% static 'css/clockpicker.css' %}" rel="stylesheet">
+<link href="{% static 'css/standalone.css' %}" rel="stylesheet">
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+		<style>
+		#header{height:400px;width:400px;border:1px solid black;position:absolute;
+		    top: 20%;
+		    left: 40%;
+		    margin-top: -10px;
+		    margin-left: -50px;}.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background:#ED2553;
+    cursor: inherit;
+    display: block;
+}
+#Div2 {
+  display: none;
+}
+#Div3 {
+  display: none;
+}
+		</style>
+
+		<style type="text/css">
+			.modal  {
+    /*   display: block;*/
+    padding-right: 0px;
+    background-color: rgba(4, 4, 4, 0.8); 
+    }
+   
+    .modal-dialog {
+            top: 20%;
+                width: 100%;
+    position: absolute;
+        }
+        .modal-content {
+                border-radius: 0px;
+                border: none;
+    top: 40%;
+            }
+            .modal-body {
+                    background-color: #0f8845;
+    color: white;
+                }
+               
+
+		</style>
+		<script>
+$(document).ready(function(){
+        $("#err").fadeOut(5000);
+   
+}); 
+
+		</script>
+		<script type="text/javascript">
+jQuery(function($) {
+        $('.clockpicker').clockpicker()
+            .find('input').change(function(){
+                // TODO: time changed
+                console.log(this.value);
+            });
+        $('#demo-input').clockpicker({
+            autoclose: true
+        });
+
+        if (something) {
+            // Manual operations (after clockpicker is initialized).
+            $('#demo-input').clockpicker('show') // Or hide, remove ...
+                    .clockpicker('toggleView', 'minutes');
+        }
+// The line below "closes" the document ready function
+});
+</script>
+
+		</head>
+
+	<body >
+
+
+
+
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#" >SSUK</a>
+    </div>
+    <ul class="nav navbar-nav">
+    <li><a href="{% url 'logout' %}">Logout</a></li>
+    <li><a href="{% url 'cp' %}">Change Password</a></li>
+     <li><a href="{% url 'home' %}">Product</a></li>
+     <li>
+       <button class="btn btn-info" style="margin-top: 5px;">Store {{form.status}}</button></li>
+
+    <li><a href="{% url 'options' %}">Settings</a></li>
+    {% if form.reged != 'no' %}
+    <li><a href="{% url 'storestatus' %}">Store status</a></li>
+      {% endif %}
+
+    </ul>
+  </div>
+</nav>
+
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <div class="modal-body">
+     
+      <H2>Are you sure to shutdown you store!</H2>
+      <h4>The store will be unreachable by customers and will be non-exisiting for others except the owner.</h4>
+      <button class="btn btn-danger" onclick="window.location.href='/shutc'">Shut</button>
+       <button class="btn btn-info" onclick="window.location.href='/shuto'">Open</button>
+     
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+    
+    
+</div>
+
+
+
+
+<div class="container">
+
+        
+
+<h1 class="well">Store Details</h1>
+  
+
+			       {% if form.status == open %}
+  
+
+			       <div style="background-color:#B91104;color: white;"  >Store Closed</div>
+{% endif %}
+
+ 
+ 
+
+
+							 
+			    {% for message in messages %}
+			    {% if 'success' in message.tags %}
+
+			        <div id="err" style="background-color:#60ce68;color: white;" class="well" >{{ message }}</div>
+			    {% endif %}
+			{% endfor %}
+
+			{% for message in messages %}
+			    {% if 'error' in message.tags %}
+			       <div id="err" style="background-color:#B91104;color: white;" class="well" >{{ message }}</div>
+			    {% endif %}
+			{% endfor %}
+
+
+
+<div class="col-lg-12 well" id="Div1">
+	<div class="row" style="font-size: 15pt;">
+
+									<div class="col-sm-6 form-group">
+											
+									<img  align="middle" style="height:150px;width:150px;" alt="Logo"  src="{{form.flogo}}"/> <label>Image</label></div>
+
+										</div>
+
+										<div class="col-sm-6 form-group">
+											<label>Store Name</label>
+									{{form.sname}}
+										</div>
+										<div class="col-sm-6 form-group">
+											<label>Category</label>
+									{{form.cat}}
+										</div>			
+										<div class="col-sm-6 form-group">
+											<label>Email Address</label>
+									{{form.smail}}
+										</div>	
+
+										<div class="col-sm-6 form-group">
+											<label>Phone Number</label>
+									{{form.cont}}
+										</div>		
+										<div class="col-sm-6 form-group">
+											<label>Company Regsitration Id</label>
+									{{form.cid}}
+										</div>	
+
+										<div class="col-sm-6 form-group">
+											<label>VAT</label>
+									{{form.vat}}
+										</div>	
+										<div class="col-sm-6 form-group">
+											<label>Weekends Open</label>
+									{{form.wstart}}
+										</div>		
+										<div class="col-sm-6 form-group">
+											<label>Weekdays Open</label>
+									{{form.wdstart}}
+										</div>
+										<div class="col-sm-6 form-group">
+											<label>Weekends Close</label>
+									{{form.wstop}}
+										</div>	
+
+										<div class="col-sm-6 form-group">
+											<label>Weekdays Close</label>
+									{{form.wdstop}}
+										</div>	
+											<div class="col-sm-6 form-group">
+											<label>Address Line 1</label>
+									{{form.sadd1}}
+										</div>	
+
+										<div class="col-sm-6 form-group">
+											<label>Address Line 2</label>
+									{{form.sadd2}}
+										</div>		
+										<div class="col-sm-6 form-group">
+											<label>City</label>
+									{{form.scity}}
+										</div>	
+
+										<div class="col-sm-6 form-group">
+											<label>State</label>
+									{{form.state}}
+										</div>		
+										<div class="col-sm-6 form-group">
+											<label>Country</label>
+									{{form.scountry}}
+										</div>	
+										<div class="col-sm-6 form-group">
+											<label>PostCode</label>
+									{{form.spost}}
+										</div>		
+										<div class="col-sm-6 form-group">
+											<label>Website</label>
+									{{form.sweb}}
+										</div>	
+										<div class="col-sm-6 form-group">
+											<label>Delivery Policy</label>
+									{{form.policy}}
+										</div>	
+
+
+<input id="Button1" type="button" class="btn btn-info" style="float: right;" value="Edit" onclick="switchVisible();"/>
+	</div>
+
+
+
+
+</div>
+  
+   
+
+
+
+
+
+
+			   
+		<div class="col-lg-12 well" id="Div2">
+				<div class="row">
+							<form action="{% url 'index' %}" method="POST" enctype="multipart/form-data" class="post-form">{% csrf_token %}
+								<div class="col-sm-12">
+									<div class="row">
+										<div class="col-sm-6 form-group">
+											<label>Store Name</label>
+											<input type="text" placeholder="Enter First Name Here.." value="{{form.sname}}" name="fsname" class="form-control" required>
+										</div>
+										<div class="col-sm-6 form-group">
+												<label>Category</label>
+												<select class="form-control" id="sel1" name="fcat" value={{form.cat}} required>
+												<option>Type of Store</option>
+												  {% for option in options %}
+
+													<option>{{option.fname}}</option>
+													{% endfor %}
+												    <option>General</option>
+												  </select>
+										</div>
+										
+									</div>					
+									
+									<div class="row">
+										<div class="col-sm-6 form-group">
+											<label>Phone Number</label>
+									<input type="text" placeholder="Enter Phone Number Here.." value="{{form.cont}}" name="fcont" class="form-control" required>
+										</div>		
+										<div class="col-sm-6 form-group">
+											<label>Email Address</label>
+									<input type="text" placeholder="Enter Email Address of Your Store.." value="{{form.smail}}" name="fsmail" class="form-control" required>
+										</div>	
+									</div>
+									<div class="row">
+										<div class="col-sm-6 form-group">
+											<label>Company Registration Id</label>
+									<input type="text" placeholder="Enter Any Registration Id of Company.." value="{{form.cid}}" name="fid" class="form-control" required>
+										</div>		
+										<div class="col-sm-6 form-group">
+											<label>VAT Number</label>
+									<input type="text" placeholder="Enter VAT Nummber..." name="fvat" value="{{form.vat}}"  class="form-control" required>
+										</div>	
+									</div>								
+								<div class="row">
+									    <div class="col-sm-6 form-group">
+										<label>Address Line 1</label>
+											<input type="text" placeholder="Enter House No./Floor/Block.." value="{{form.sadd1}}" name="fadd1" class="form-control" required>
+										</div>
+										 <div class="col-sm-6 form-group">
+										<label>Address Line 2</label>
+											<input type="text" placeholder="Enter Road/Area/Town.."  value="{{form.sadd2}}" name="fadd2" class="form-control" required>
+										</div>	
+									</div>	
+									<div class="row">
+										<div class="col-sm-3 form-group">
+											<label>City</label>
+											<input type="text" placeholder="Enter City Name Here.." value="{{form.scity}}" name="fcity" class="form-control" required>
+										</div>	
+										<div class="col-sm-3 form-group">
+											<label>State</label>
+											<input type="text" placeholder="Enter State Name Here.." value="{{form.state}}" name="fstate" class="form-control" required>
+										</div>	
+										<div class="col-sm-3 form-group">
+											<label>Country</label>
+											<input type="text" placeholder="Enter Country Name Here.." value="{{form.scountry}}" name="fcountry" class="form-control" required>
+										</div>
+										<div class="col-sm-3 form-group">
+											<label>Zip</label>
+											<input type="text" placeholder="Enter Zip Code Here.." value="{{form.spost}}"  name="fpostcode" class="form-control" required>
+										</div>		
+									</div>
+									<div class="row">
+									    <div class="col-sm-6 form-group">
+										<label>Weekends Open</label>
+											<div class="input-group clockpicker">
+											    <input type="text" class="form-control" name="wstart" value="{{form.wstart}}">
+											    <span class="input-group-addon">
+											        <span class="glyphicon glyphicon-time"></span>
+											    </span>
+											</div>
+										</div>
+										 <div class="col-sm-6 form-group">
+										<label>Weekends close</label>
+											<div class="input-group clockpicker">
+											    <input type="text" class="form-control" name="wstop" value="{{form.wstop}}">
+											    <span class="input-group-addon">
+											        <span class="glyphicon glyphicon-time"></span>
+											    </span>
+											</div>
+										</div>	
+									</div>	
+									<div class="row">
+									    <div class="col-sm-6 form-group">
+										<label>Weekdays Open</label>
+											<div class="input-group clockpicker">
+											    <input type="text" class="form-control" name="wdstart" value="{{form.wdstart}}">
+											    <span class="input-group-addon">
+											        <span class="glyphicon glyphicon-time"></span>
+											    </span>
+											</div>
+										</div>
+										 <div class="col-sm-6 form-group">
+										<label>Weekdays close</label>
+											<div class="input-group clockpicker">
+											    <input type="text" class="form-control" name="wdstop" value="{{form.wdstop}}">
+											    <span class="input-group-addon">
+											        <span class="glyphicon glyphicon-time"></span>
+											    </span>
+											</div>
+										</div>	
+									</div>	
+								<div class="form-group">
+									<label>Website</label>
+									<input type="text" placeholder="Enter Website Name Here.." value="{{form.sweb}}"  name="fweb" class="form-control" required>
+								</div>
+								
+								<span class="btn btn-default btn-file">
+									<label>Logo</label>
+									<input type="file" value="{{form.flogo}}"  name="flogo" class="form-control" required  hidden>
+								</span>
+								
+							     
+								<div style="float: right;">
+								<img  align="middle" style="height:60px;width:60px;tfloat:right;clear:right;" alt="Logo"  src="{{form.flogo}}"/> </div>
+
+											
+								</div>
+								<div>
+										<div style="float: left;">
+												
+								<span class="btn btn-info btn-file">
+									<label>Delivery Policy and Cancellation Policy</label>
+									<input type="file" value="{{form.policy}}"  name="policy" class="form-control" required  hidden>
+								</span>
+										 </div>
+
+
+
+								</div>
+							
+							</div>
+
+				
+				</div>
+					
+
+             
+			 
+
+			   <div class="col-lg-12 well" id="Div3">
+			   	<div style="float: left;">
+                     <button type="submit" class="btn btn-success">Submit</button></form></div>
+                     <div style="float:right;">
+                     <button type="cancel" onclick="switchVisible()" class="btn btn-danger">Close</button></div>
+                     
+			                                  
+				</div>
+			   
+
+	</div>
+   
+
+       
+
+
+    <script src="{% static 'js/dropzone.js' %}"></script>
+     <script src="{% static 'js/clockpicker.js' %}"></script>
+<script type="text/javascript">
+	
+	function switchVisible() {
+
+            if (document.getElementById('Div1')) {
+
+                if (document.getElementById('Div1').style.display == 'none') {
+                    document.getElementById('Div1').style.display = 'block';
+                    document.getElementById('Div2').style.display = 'none';
+                    document.getElementById('Div3').style.display = 'none';
+                }
+                else {
+                    document.getElementById('Div1').style.display = 'none';
+                    document.getElementById('Div2').style.display = 'block';
+                    document.getElementById('Div3').style.display = 'block';
+                }
+            }
+}
+</script>
+
+<script>
+function clicked(e)
+{
+    if(!confirm('Are you sure?'))e.preventDefault();
+    else document.getElementById('Button2').value=='Open Store';
+}
+</script>
+
+
+
+
+	</body>
+</html>

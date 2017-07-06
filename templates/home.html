@@ -1,0 +1,157 @@
+{% load staticfiles %}
+<html>
+		<head>
+		<style>
+		#header{height:400px;width:400px;position:absolute;
+		    top: 20%;
+		    left: 40%;
+		    margin-top: -10px;
+		     overflow-y:auto
+            box-shadow: 10px 10px 5px #888888;
+}
+		    margin-left: -50px;}
+
+.navbar-custom {
+  background-color: #221177;
+  border-color: transparent;
+}
+.navbar-custom .navbar-brand {
+  color: #fed136;
+  font-family: "Kaushan Script", "Helvetica Neue", Helvetica, Arial, cursive;
+}
+.navbar-custom .navbar-brand:hover,
+.navbar-custom .navbar-brand:focus,
+.navbar-custom .navbar-brand:active,
+.navbar-custom .navbar-brand.active {
+  color: #fec503;
+}
+.navbar-custom .navbar-collapse {
+  border-color: rgba(255, 255, 255, 0.02);
+}
+.navbar-custom .navbar-toggle {
+  background-color: #fed136;
+  border-color: #fed136;
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  color: white;
+  font-size: 12px;
+}
+.navbar-custom .navbar-toggle:hover,
+.navbar-custom .navbar-toggle:focus {
+  background-color: #fed136;
+}
+.navbar-custom .nav li a {
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: white;
+}
+.navbar-custom .nav li a:hover,
+.navbar-custom .nav li a:focus {
+  color: #fed136;
+  outline: none;
+}
+.navbar-custom .navbar-nav > .active > a {
+  border-radius: 0;
+  color: white;
+  background-color: #fed136;
+}
+.navbar-custom .navbar-nav > .active > a:hover,
+.navbar-custom .navbar-nav > .active > a:focus {
+  color: white;
+  background-color: #fec503;
+}
+@media (min-width: 768px) {
+  .navbar-custom {
+    background-color: transparent;
+    padding: 25px 0;
+    -webkit-transition: padding 0.3s;
+    -moz-transition: padding 0.3s;
+    transition: padding 0.3s;
+    border: none;
+  }
+  .navbar-custom .navbar-brand {
+    font-size: 2em;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+  }
+  .navbar-custom .navbar-nav > .active > a {
+    border-radius: 3px;
+  }
+}
+		</style>
+		<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   <link href="{% static 'css/dropzone.css' %}" rel="stylesheet">
+   <link href="{% static 'css/a.css' %}" rel="stylesheet">
+    <script src="{% static 'js/dropzone.js' %}"></script>
+  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		</head>
+
+	<body bgcolor="grey" >
+
+
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#" >SSUK</a>
+    </div>
+    <ul class="nav navbar-nav">
+    <li><a href="{% url 'logout' %}">Logout</a></li>
+    <li><a href="{% url 'cp' %}"><b>Change Password </b></a></li>
+    </ul>
+  </div>
+</nav>
+
+
+
+
+
+
+
+<h1 align="center" > Welcome fill the Store Details</h1>
+
+
+
+
+
+ 
+
+
+<div class="container">
+   {% if messages %}
+              {% for message in messages %}
+              <div class="alert {{ message.tags }} larger">
+                <p align="center">{{ message }}</small></p>
+              </div>
+              {% endfor %}
+              {% endif %}
+
+                        <div  style="float:left;width:500px;height:1000px;">
+                              <form action="{% url 'image' %}" method="POST" enctype="multipart/form-data" class="form-control">{% csrf_token %}
+                                          {{ form.as_p }}
+
+                           
+                                          <button type="submit" class="save btn btn-default">Open Store</button>
+                                      </form>
+
+                          </div> 
+
+                       
+
+
+                    
+
+
+<div>
+
+
+
+
+	</body>
+</html>

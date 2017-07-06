@@ -1,0 +1,194 @@
+{% load staticfiles %}
+<html>
+
+
+<head>
+<style type="text/css">.glyphicon { margin-right:5px; }
+.item:hover{
+
+  box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+.thumbnail
+{
+    margin-bottom: 20px;
+    padding: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+}
+
+.item.list-group-item
+{
+    float: none;
+    width: 100%;
+    background-color: #fff;
+    margin-bottom: 10px;
+}
+.item.list-group-item:nth-of-type(odd):hover,.item.list-group-item:hover
+{
+    background: #428bca;
+}
+
+.item.list-group-item .list-group-image
+{
+    margin-right: 10px;
+}
+.item.list-group-item .thumbnail
+{
+    margin-bottom: 0px;
+}
+.item.list-group-item .caption
+{
+    padding: 9px 9px 0px 9px;
+}
+.item.list-group-item:nth-of-type(odd)
+{
+    background: #eeeeee;
+}
+
+.item.list-group-item:before, .item.list-group-item:after
+{
+    display: table;
+    content: " ";
+}
+.item.list-group-item img
+{
+    float: left;
+}
+.item.list-group-item:after
+{
+    clear: both;
+}
+.list-group-item-text
+{
+    margin: 0 0 11px;
+}
+</style>
+
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap-select.css' %}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+   
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+
+<body> 
+
+
+<div class="container">
+    <div class="well well-sm" style="background-color:#ed2553;color: white;">
+        <strong>Products List</strong>
+        <div class="btn-group">
+            <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
+            </span>List</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
+                class="glyphicon glyphicon-th"></span>Grid</a>
+        </div>
+        <ul style=" display: inline-block;
+    zoom:1;
+    *display:inline;">
+        <li>
+        <strong><a href="{% url 'home' %}"> Add Product </a><span class="glyphicon glyphicon-add">
+            </span></strong></li>
+            <li>
+              <div> <strong><a href="/stock"> Stock Details </a><span class="glyphicon glyphicon-add">
+            </span></strong></div>
+            </li>
+     
+
+    </div>
+
+    <div id="products" class="row list-group" >
+
+	{% for r in result reversed %}
+
+
+		 <div class="item  col-xs-4 col-lg-4" >
+            <div class="thumbnail">
+                <img class="group list-group-image materialboxed" data-caption="{{r.ptitle}} | ₹ {{r.price}}" src="{{r.ppro}}" alt="" style="width:400px;
+   height:250px;
+   max-width:100%;
+max-height:100%;" />
+<script type="text/javascript">
+	  $(document).ready(function(){
+    $('.materialboxed').materialbox();
+  });
+</script>
+                <div class="caption">
+                    <h4 class="group inner list-group-item-heading">
+                        {{r.ptitle}}</h4>
+                     <bold>  
+                      <p class="group inner list-group-item-text">Category:  {{r.pcat}}</p></bold>
+                    <p class="group inner list-group-item-text">Brand: {{r.pbrand}}</p>
+                    <p class="group inner list-group-item-text" style="color: red;">Discount: {{r.pdisc}} %</p>
+                    <p class="group inner list-group-item-text">Weight: {{r.pweight}} pounds</p>
+                    <p class="group inner list-group-item-text">Units:  {{r.punit}}</p>
+                     <p class="group inner list-group-item-text">Min. order:  {{r.pmin}}</p>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <p class="lead">
+                                ₹ {{r.price}}</p>
+                        </div>
+                     </div>
+                      <div class="row">
+
+                        <div class="col-xs-12 col-md-6" style="float: left;">
+                            <a class="btn btn-success" href="/product/{{r.ptitle}}">Update</a>
+                        </div>
+                         <div class="col-xs-12 col-md-6" style="float:right;">
+                            <a class="btn btn-danger" style="background-color:#ee6e73" href="/remove/{{r.ptitle}}">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	  
+	 {% empty %}
+           <div  style="background-color:#B91104;color: white;" class="well" >No Product added yet!!</div>
+          	
+	{% endfor %}
+       
+       </div>
+</div>
+
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+	
+$(document).ready(function() {
+    $('#list').click(function(event){event.preventDefault();$('#products .item').addClass('list-group-item');});
+    $('#grid').click(function(event){event.preventDefault();$('#products .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
+});
+
+</script>
+
+
+
+
+</body>
+
+
+
+
+
+</html>

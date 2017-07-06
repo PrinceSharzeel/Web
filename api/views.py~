@@ -1,0 +1,152 @@
+from django.shortcuts import render,render_to_response,get_object_or_404,redirect
+from django.http import HttpResponse,HttpResponseRedirect
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
+from pymongo import MongoClient
+import random,string,imghdr,datetime
+from bson.json_util import dumps
+
+from .models import Product,Customer,USER
+
+from bson.objectid import ObjectId
+from django.views.decorators.csrf import csrf_exempt
+
+from rest_framework.decorators import api_view
+
+from django.core.urlresolvers import reverse
+
+
+
+from .serializers import ProductSerializer,CustomerSerializer,UserSerializer
+
+
+
+client = MongoClient('localhost', 27017)
+user_db= client.ssuk
+
+@csrf_exempt
+@api_view(['GET','POST'])
+def apilist(request):
+    
+    if request.method == 'GET':
+        #get our collection
+        products = []
+        for r in user_db.product_details.find():
+            #product = Product(r["shop_id"],r["ptitle"],r["pbrand"],r["price"],r["ppro"])
+
+            product=Product( r["shop_id"],r['ptitle'],r['pbrand'],r['punit'],r['pcat'],r['ppro'],r['plitres'],
+				        r['package'],r['pweight'],r['pdisc'],r['pmin'],r['pmax'],r['preddisc'],r['pexp'],
+				        r['price'] )
+            products.append(product)
+        serializedList = ProductSerializer(products, many=True)
+        return Response(serializedList.data)
+    elif request.method == 'POST':
+    
+        
+        shop_id = request.data.get("shop_id")
+        ptitle = request.data.get("ptitle")
+        pbrand=request.data.get("pbrand")
+        price=request.data.get("price")
+        ppro=request.data.get("ppro")
+        print(request.data)
+        try:user_db.product_details.insert_one({"shop_id":shop_id,"ptitle" : ptitle, "pbrand": pbrand, "ptitle":ptitle})
+        except:return Response({"Ok":"false"})
+        return Response({ "ok": "true" })
+
+
+
+@api_view(['POST'])
+def apireg(request):
+    serialized = CustomerSerializer(data=request.data)
+    if serialized.is_valid():
+    	username=request.data.get("username")
+    	password=request.data.get("password")
+    	contact=request.data.get("contact")
+    	name=request.data.get("name")
+    	address=request.data.get("address")
+    	orders=request.data.get("orders")
+    	u=user_db.client_users.find_one({"username" : username})
+    	if u is not None:return Response({"fail":"Already taken"})
+    	try:user_db.client_users.insert_one({'username':username,'password':password,'address':address,'contact':contact,'name':name,'orders':orders})
+    	except:return Response({"ok":"false"})
+    	return Response({ "ok": "true" })
+
+
+ 
+    else:
+        return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+@api_view(['POST'])
+def apiloogin(request,uname):
+	if request.method=='POST':
+	    serialized = UserSerializer(data=request.data)
+	    if serialized.is_valid():
+	    	username=request.data.get("username")
+	    	password=request.data.get("password")
+	    	print(password)
+	    	u=user_db.client_users.find_one({"username" : uname})
+	    	try:
+	    		if u is not None and u['password']==password:
+	    			
+	    			l=User(u['username'],u['password'])
+		    		serializedList = UserSerializer(l, many=True)
+		    		return Response({"Ok":"OKKK"})
+
+	    	except:return Response({"Ok":"false"})
+	    	return Response({ "fail": "Check username or password" })
+
+
+
+
+@api_view(['GET'])
+def apilogin(request,uname):
+    if request.method=='GET':
+        p=uname.index('N')
+        username=uname[0:p-1]
+        password=uname[p+1:]
+        print(password)
+        u=user_db.client_users.find_one({"username" : username})
+        try:
+            if u is not None and u['password']==password:
+                
+                l=User(u['username'],u['password'])
+                serializedList = UserSerializer(l, many=True)
+                return Response({"Ok":"OKKK"})
+
+        except:return Response({"Ok":"false"})
+        return Response({ "fail": "Check username or password" })
+
+
+
+@api_view(['GET'])
+def orders(request,pk):
+    if request.method == 'GET':
+        #get our collection
+        
+        for r in user_db.orders.find({"username":pk}):
+            #product = Product(r["shop_id"],r["ptitle"],r["pbrand"],r["price"],r["ppro"])
+
+            product=Product( r["shop_id"],r['username'],r['pbrand'],r['punit'],r['pcat'],r['ppro'],r['plitres'],
+                        r['package'],r['pweight'],r['pdisc'],r['pmin'],r['pmax'],r['preddisc'],r['pexp'],
+                        r['price'] )
+            products.append(product)
+        serializedList = ProductSerializer(products, many=True)
+        return Response(serializedList.data)
+
+
+
+
+
+
+
+
+

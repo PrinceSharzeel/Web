@@ -1,0 +1,71 @@
+{% load staticfiles %}
+<html>
+		<head>
+<title>SSUK</title>
+<link rel="shortcut icon" href="{% static 'media/cart.png' %}" />
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="css/nav.css">
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+   
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		</head>
+
+	<body style="background-color: #F1F1F1;" >
+
+
+
+<div class="navbar-fixed">
+
+<nav class="nav-extended">
+    <div class="nav-wrapper">
+    <img src="{% static 'media/cart.png' %}" alt="" class="circle" width="40px" height="40px">
+      <a href="/" class="brand-logo">SSUK</a>
+      <ul class="right hide-on-med-and-down">
+          <li><a href="/home">Add Product</a></li>
+          <li><a href="/list">Products</a></li>
+          <li><a href="/stock">Stock</a></li>
+
+           <li><a href="/logout">Logout</a></li>
+      </ul>
+    </div>
+    <div class="nav-content">
+
+      <span class="nav-title">Subscribe</span>
+      <a class="btn-floating btn-large halfway-fab waves-effect waves-light teal">
+        <i class="material-icons">add</i>
+      </a>
+    </div>
+  </nav>
+
+</div>
+
+
+
+
+
+
+<div class="container" style="padding-top: 100px;">
+   
+        <div class="card-panel">
+          <div class="card-panel btn waves-effect waves-light">Update the prices in bulk to change them</div></div>
+
+  <div class="row">
+  <div class="col sm-3">
+{{form.render}}
+
+  </div>
+  </div>  
+
+
+</div>
+
+
+
+	</body>
+</html>

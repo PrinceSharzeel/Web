@@ -1,0 +1,64 @@
+{% load staticfiles %}
+<html>
+		<head>
+<title>SSUK</title>
+<link rel="shortcut icon" href="{% static 'media/cart.png' %}" />
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="css/nav.css">
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="{% static 'css/dropzone.css' %}" rel="stylesheet">
+<link href="{% static 'css/clockpicker.css' %}" rel="stylesheet">
+<link href="{% static 'css/standalone.css' %}" rel="stylesheet">
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+   
+		</head>
+
+	<body >
+<div class="container">
+ 	{% for r in result %} 
+ <div class="col s6 m7">
+    <div class="card horizontal">
+      <div class="card-image"  >
+        <img src="{{r.ppro}}" style="width:100px;
+   height:150px;
+   max-width:100%;
+max-height:100%;" >
+      </div>
+      <div class="card-stacked">
+        <div class="card-content">
+          <p style="font-size:15px;">{{r.ptitle}}<br>{{r.price}}</p>
+        </div>
+        <div class="card-action">
+         
+          <div class="input-field col s4">
+            <input id="input_text" type="text" name={{r.price}} textholder="{{r.price}}" data-length="10">
+            <label for="input_text">{{r.price}}</label>
+          </div>
+       
+          
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+    
+            
+
+{% endfor %}
+            
+</div>
+
+
+
+	</body>
+</html>

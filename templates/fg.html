@@ -1,0 +1,155 @@
+{% load staticfiles %}
+<html>
+		<head>
+		<style>
+		#header{height:400px;width:400px;position:absolute;
+		    top: 20%;
+		    left: 40%;
+		    margin-top: -10px;
+		     overflow-y:auto
+            box-shadow: 10px 10px 5px #888888;
+}
+		    margin-left: -50px;}
+
+.navbar-custom {
+  background-color: #222222;
+  border-color: transparent;
+}
+.navbar-custom .navbar-brand {
+  color: #fed136;
+  font-family: "Kaushan Script", "Helvetica Neue", Helvetica, Arial, cursive;
+}
+.navbar-custom .navbar-brand:hover,
+.navbar-custom .navbar-brand:focus,
+.navbar-custom .navbar-brand:active,
+.navbar-custom .navbar-brand.active {
+  color: #fec503;
+}
+.navbar-custom .navbar-collapse {
+  border-color: rgba(255, 255, 255, 0.02);
+}
+.navbar-custom .navbar-toggle {
+  background-color: #fed136;
+  border-color: #fed136;
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  color: white;
+  font-size: 12px;
+}
+.navbar-custom .navbar-toggle:hover,
+.navbar-custom .navbar-toggle:focus {
+  background-color: #fed136;
+}
+.navbar-custom .nav li a {
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: white;
+}
+.navbar-custom .nav li a:hover,
+.navbar-custom .nav li a:focus {
+  color: #fed136;
+  outline: none;
+}
+.navbar-custom .navbar-nav > .active > a {
+  border-radius: 0;
+  color: white;
+  background-color: #fed136;
+}
+.navbar-custom .navbar-nav > .active > a:hover,
+.navbar-custom .navbar-nav > .active > a:focus {
+  color: white;
+  background-color: #fec503;
+}
+@media (min-width: 768px) {
+  .navbar-custom {
+    background-color: transparent;
+    padding: 25px 0;
+    -webkit-transition: padding 0.3s;
+    -moz-transition: padding 0.3s;
+    transition: padding 0.3s;
+    border: none;
+  }
+  .navbar-custom .navbar-brand {
+    font-size: 2em;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+  }
+  .navbar-custom .navbar-nav > .active > a {
+    border-radius: 3px;
+  }
+}
+		</style>
+		<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <script>
+$(document).ready(function(){
+        $("#err").fadeOut(5000);
+   
+}); 
+
+    </script>
+		</head>
+
+	<body bgcolor="grey" >
+
+
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#" >SSUK</a>
+    </div>
+    <ul class="nav navbar-nav">
+    </ul>
+  </div>
+</nav>
+
+
+
+
+
+
+
+<h1 align="center" > Password</h1>
+
+
+
+
+
+
+  <div id="err" style="width:800px; margin:0 auto;"> {% for message in messages %}
+    {% if 'success' in message.tags %}
+
+        <div  style="background-color:#60ce68;color: white;" class="well" >{{ message }}</div>
+    {% endif %}
+{% endfor %}
+
+{% for message in messages %}
+    {% if 'error' in message.tags %}
+       <div style="background-color:#ED2553;color: white;" class="well" >{{ message }}</div>
+    {% endif %}
+{% endfor %}</div>
+
+
+
+				<div id="header">
+                     
+                       
+					    <form action="{% url "cp" %}" method="POST" class="post-form">{% csrf_token %}
+					        {{ form.as_p }}
+					        <button type="submit" class="save btn btn-success">Save</button>
+                 <div style="float: right"> <a href="{% url 'index' %}" class="save btn btn-danger">Cancel</a>
+
+					    </form>
+
+					   
+                       
+                 </div>
+	</body>
+</html>

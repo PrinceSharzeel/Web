@@ -1,0 +1,272 @@
+{% load staticfiles %}
+<html>
+		<head>
+<title>SSUK</title>
+<link rel="shortcut icon" href="{% static 'media/cart.png' %}" />
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="css/nav.css">
+
+<script type="text/javascript" src="{% static 'js/Product_form_valid.js' %}"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+   
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		</head>
+	<body style="background-color: #F1F1F1;" >
+
+
+
+<div class="navbar-fixed">
+
+<nav class="nav-extended">
+    <div class="nav-wrapper">
+    <img src="{% static 'media/cart.png' %}" alt="" class="circle" width="40px" height="40px">
+      <a href="/" class="brand-logo">SSUK</a>
+      <ul class="right hide-on-med-and-down">
+
+          <li><a href="/">Store</a></li>
+          <li><a href="/options">Options</a></li>
+          <li><a href="/list">Products</a></li>
+          <li><a href="/stock">Stock</a></li>
+
+           <li><a href="/logout">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+</div>
+
+
+
+
+
+
+    <div class="row" style="margin-top: 0px;">
+
+
+
+
+    <div class="col s12"><div class="card-panel">
+  <h4 style="color:#EE6E73"><i class="material-icons right">receipt</i> Add New Product in your Stock</h4>
+    </div>
+
+   
+
+    </div>
+
+
+
+    <div class="col s12 m4 l2">  <div class="card-panel">
+      
+
+ <h6 style="color:#EE6E73"><i class="material-icons right">receipt</i> Add Options for Product Category as per your products<br> <a href="/options"> <b>Click to add<b></a></h6>
+
+    </div>
+
+    </div>
+<script>
+        {% if messages %}
+            {% for message in messages %}
+                Materialize.toast('{{ message }}', 4000,'rounded');
+            {% endfor %}
+        {% endif %}
+</script>
+
+    <script>
+$(document).ready(function(){
+        $("#err").fadeOut(5000);
+   
+}); 
+
+    </script>
+
+
+    <script type="text/javascript">$(document).ready(function() {
+    $('select').material_select();
+});
+</script>
+
+    <div class="col s12 m4 l8">
+     <div class="card-panel">
+    <form action="{% url 'home' %}"  enctype="multipart/form-data" onsubmit="return ValidateForm()"  method="POST">{% csrf_token %}  
+      <div class="row">
+          
+          <div class="row">
+                    <div class="input-field col s6">
+                      <label>Item Name <span>*</span></label>
+                  <input type="text"   name="ptitle" id="firstname"  onkeyup="FormValidation()" class="form-control" required>
+                    </div>  
+                    
+          </div>
+                    <div class="row">
+
+
+                          <div class="input-field col s12">
+                            <select name="pcat">
+
+                              {% for r in options %}
+                              <option >{{r.fname}}</option>
+                              {% endfor %}
+                             </select>
+                            <label>Category</label>
+                          </div>
+
+                  </div>
+          <div class="row">
+                    <div class="input-field col s6">
+                      <label>Brand <span>*</span></label>
+                  <input type="text"  name="pbrand" id="pbrand" onkeyup="BrandValidation()" class="form-control" required>
+                    </div>    
+                    <div class="input-field col s6">
+                      <label>Package <span>*</span></label>
+                  <input type="text"   name="package" id="package" onkeyup="PackageValidation()" class="form-control" required>
+                    </div>  
+          </div>
+          <div class="row">
+                    <div class="input-field col s6">
+                      <label>Unit</label>
+                  <input type="text" name="punit" id="punit" onkeyup="UnitValidation()" class="form-control" required>
+                    </div>    
+                    <div class="input-field col s6">
+                      <label>Weight</label>
+                  <input type="text"  name="pweight" id="pweight" onkeyup="WeightValidation()"  class="form-control" required>
+                    </div>  
+          </div>
+          <div class="row">
+                    <div class="input-field col s6">
+                      <label>Litres</label>
+                  <input type="text"   name="plitres" id="plitres" onkeyup="LitreValidation()" class="form-control" required>
+                    </div>    
+                    <div class="input-field col s6">
+                      <label>Price per unit</label>
+                  <input type="text"  name="price" id="price" onkeyup="PriceValidation()" class="form-control" required>
+                    </div>  
+          </div>
+          <div class="row">
+                    <div class="input-field col s6">
+                      <label>Minimum Order Quantity</label>
+                  <input type="text"   name="pmin" id="pmin" onkeyup="MinValidation()" class="form-control" required>
+                    </div>    
+                    <div class="input-field col s6">
+                      <label>Maximum Order Quantity</label>
+                  <input type="text"  name="pmax" id="pmax" onkeyup="MaxValidation()" class="form-control" required>
+                    </div>  
+                  </div>
+          <div class="clearfix"></div>
+          
+          <div class="clearfix"></div>
+
+                                         <div class="file-field input-field col s3" id="content">
+                  <div class="btn">
+                    <span>Product Image</span>
+                    <input name="ppro" type="file" >
+                  </div>
+                  <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" >
+                  </div>
+                </div>
+
+
+          <div class="personal-details">
+        
+
+          
+            <label>Discount(%) <span>*</span></label>
+            <input type="text" class="name" name="pdisc" id="pdisc" onkeyup="discValidation()"   placeholder="">
+            <div class="clearfix"></div>
+            <label>Discount(Reduced Price)<span>*</span></label>
+            <input type="text" class="phone"  name="preddisc" id="preddisc" onkeyup="preddiscValidation()" placeholder=""><script type="text/javascript">
+              function disc(){var a=document.getElementById('pdisc').value;if(a>100)alert("Invalid Percentage!!");}
+            </script>
+          
+            <label>Discount Expiry Date<span>*</span></label>
+            <input type="date" class="datepicker" name="pexp" id="pexp" >
+            <div class="clearfix"></div>
+            <script type="text/javascript">
+               $('.datepicker').pickadate({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 35,
+     format:'yyyy-mm-dd' // Creates a dropdown of 15 years to control year
+  });
+        
+            </script>
+           <button class="btn waves-effect waves-light" type="submit" name="action">Update<i class="material-icons right">cloud</i>
+  </button>
+
+          <div class="clearfix"></div>
+          </form>
+
+
+     </div>
+
+
+    </div>
+
+
+          
+                                
+                        
+
+
+
+
+    </div>
+
+</div>
+
+  </div>
+
+
+
+
+
+
+ <footer class="page-footer">
+         
+          <div class="footer-copyright">
+            <div class="container">
+            © 2017 Copyright Shrishti Solutions U.K.
+            <a class="grey-text text-lighten-4 right" href="#!">Contact Us</a>
+            </div>
+          </div>
+        </footer>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ["Time", "Sales"],
+          {% for r in result %}
+          [{{r.time}}, '{{r.price}}'],
+          {% endfor %}
+        ]);
+
+        var options = {
+          title: 'Company Performance',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+	</body>
+</html>

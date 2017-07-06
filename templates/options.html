@@ -1,0 +1,119 @@
+{% load staticfiles %}
+<html>
+		<head>
+<title>SSUK</title>
+<link rel="shortcut icon" href="{% static 'media/cart.png' %}" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+   
+		</head>
+
+	<body >
+
+
+
+
+ <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper">
+        <a href="/" class="brand-logo">SSUK</a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="/home">Add Product</a></li>
+          <li><a href="/list">Products</a></li>
+           <li><a href="/price">Prices</a></li>
+
+          <li><a href="/stock">Stock</a></li>
+
+           <li><a href="/logout">Logout</a></li>
+           <li><span class="badge blue">{{status}}</span></li>
+        </ul>
+
+      </div>
+    </nav>
+  </div>
+
+
+{{form.render}}
+
+<div class="container">
+
+
+       {% for message in messages %}
+                  {% if 'success' in message.tags %}
+
+                      <div id="err" style="background-color:#60ce68;color: white;" class="well" >{{ message }}</div>
+                  {% endif %}
+              {% endfor %}
+
+              {% for message in messages %}
+                  {% if 'error' in message.tags %}
+                     <div id="err" style="background-color:#B91104;color: white;" class="well" >{{ message }}</div>
+                  {% endif %}
+              {% endfor %}
+    <div class="col s12 m4 l8">
+     <div class="card-panel">
+    <h4 style="color:#EE6E73"><i class="material-icons right">dns</i> Add your Options for Product category</h4>
+     </div>
+     </div>
+
+<form class="col s12" action="{% url "options" %}" method="POST">{% csrf_token %}
+  
+      <div class="row">
+        <div class="input-field col s6">
+          <input type="text"  name="cat" class="validate" required>
+                  
+          <label for="first_name">Option</label>
+        </div>
+       </div>
+        <button class="btn waves-effect waves-light" type="submit"  name="action">Add<i class="material-icons right">add</i>
+  </button>
+
+
+</form>
+
+
+         	{% for r in result reversed %} 
+
+      
+                <div class="col s3 m2">
+                  <div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                      <span class="card-title">{{r.fname}}</span>
+                    </div>
+                    <div class="card-action">
+                      <a href="/op_rem/{{r.fname}}">Delete</a>
+                    </div>
+                  </div>
+                </div>
+                     
+               {% empty %}
+           <div  style="background-color:#B91104;color: white;" class="well" >No options added!!</div>
+          
+        {% endfor %}
+        
+       </div>  
+
+
+      
+
+
+
+       
+</div>
+
+   <script type="text/javascript">
+  
+$(document).ready(function(){
+        $("#err").fadeOut(5000);
+   
+}); 
+</script>
+
+	</body>
+</html>

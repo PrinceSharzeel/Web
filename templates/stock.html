@@ -1,0 +1,122 @@
+{% load staticfiles %}
+<html>
+		<head>
+<title>SSUK</title>
+<link rel="shortcut icon" href="{% static 'media/cart.png' %}" />
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+   
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		</head>
+
+	<body style="background-color: #F1F1F1;" >
+
+
+
+<div class="navbar-fixed">
+
+<nav class="nav-extended">
+    <div class="nav-wrapper">
+    <img src="{% static 'media/cart.png' %}" alt="" class="circle" width="40px" height="40px">
+      <a href="/" class="brand-logo">SSUK</a>
+      <ul class="right hide-on-med-and-down">
+          <li><a href="/home">Add Product</a></li>
+          <li><a href="/list">Products</a></li>
+
+           <li><a href="/price">Prices</a></li>
+
+           <li><a href="/logout">Logout</a></li>
+      </ul>
+    </div>
+    <div class="nav-content">
+
+      <span class="nav-title">Inventory-Stock Details</span>
+      <a href="/stock" class="btn-floating btn-large halfway-fab waves-effect waves-light teal">
+        <i class="material-icons">replay</i>
+      </a>
+    </div>
+  </nav>
+
+</div>
+
+
+
+  
+  
+    
+
+
+
+
+
+<div class="container" style="padding-top: 100px;">
+   
+       
+
+  <div class="row">
+    <form action="{% url "stock" %}" method="POST">{% csrf_token %}
+    <button class="btn waves-effect waves-light"   type="submit" name="action">Update<i class="material-icons right">done</i>
+  </button>
+ 
+ <div class="card-panel  responsive-table">
+   <table class="bordered striped">
+        <thead>
+          <tr>
+              <th>Reorder</th>
+              <th>Item Id</th>
+              <th>Last Order</th>
+              <th>Item Name</th>
+              <th>Cost/Item</th>
+              <th>Stock Quantity</th>
+              <th>Total Value</th>
+              <th>Reorder Level</th>
+          </tr>
+        </thead>
+        <tbody>
+      
+
+  {% load portal_tags %}
+          {% for r in result %} 
+
+                        <tr>
+                         
+                          <td><span class="new badge blue">{{r.reorder}}</span></td>
+                          <td><span class="new badge red">{{r.product_id}}</span></td>
+                          
+                          <td>{{r.date}}</td>
+                          <td>{{r.ptitle}}</td>
+                          <td>{{r.cost}}</td>
+                          <td>{{r.unit}}</td>
+                          <td>{{r.value}}</td>
+                          <td><input style="color:#009688" value="{{r.reorder_level}}" name="{{r|mongo_id}}"/></td>
+
+
+                        </tr>
+
+                {% empty %}
+           <div  style="color:#EE6E73;" class="well" >Stock Empty, you need to add products</div>
+            
+
+
+            {% endfor %}
+         </form>
+        </tbody>
+      </table>
+      </div>
+
+
+
+
+
+
+  </div>  
+
+
+</div>
+	</body>
+</html>
